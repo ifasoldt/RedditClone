@@ -12,6 +12,7 @@ class UsersController < ApplicationController
   def show
     @num = 1
     all_user_links
+    kaminari_links
   end
 
   # GET /users/new
@@ -86,13 +87,13 @@ class UsersController < ApplicationController
       @user_links_posts += @user_links
       @user_links_posts += @user_disliked_links
       @user_links_posts += @user_clicked_links
-      @user_links_posts += @user_generated_links
+      @user_links_posts += user_generated_links
       @user_links_posts = Kaminari.paginate_array(@user_links_posts).page(params[:page]).per(10)
       #@user_links_posts is nil. Why??
     end
 
     def user_generated_links
-      @user_links = @user.links.sort_by{|link| link.vote_score}.reverse
+      @user_links = @user.links.order(vote_score: :desc)
     end
 
     def user_liked_links

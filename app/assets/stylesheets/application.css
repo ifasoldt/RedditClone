@@ -79,3 +79,12 @@ span {
   margin-top: 20px;
   margin-bottom: 20px;
 }
+
+.comment {
+  color: grey;
+  margin-top: 15px;
+}
+
+.top-comment-line{
+  color: blue;
+}

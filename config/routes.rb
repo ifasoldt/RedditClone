@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
   resources :subreddits, param: :name
   resources :users, param: :username, except:[:new]
-  resources :links
+  resources :links do
+    resources :comments
+  end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -11,8 +14,8 @@ Rails.application.routes.draw do
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
   get 'links/:id/go' => 'links#go', as: :go
-  get 'links/:id/up_vote' => 'links#up_vote', as: :up_vote
-  get 'links/:id/down_vote' => 'links#down_vote', as: :down_vote
+  post 'links/:id/up_vote' => 'links#up_vote', as: :up_vote
+  post 'links/:id/down_vote' => 'links#down_vote', as: :down_vote
   get 'search' => 'links#search'
   get 'login' => 'user_sessions#new'
   post 'login' => 'user_sessions#create'
