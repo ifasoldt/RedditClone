@@ -6,13 +6,13 @@
   <div class="col-md-1">
     <div class="row vote-image">
       <div class="col-md-2">
-      <%= link_to (image_tag "up-arrow.png", class: "small-arrow"), up_vote_path(id: link.id) %>
+      <%= link_to (image_tag "up-arrow.png", class: "small-arrow"), up_vote_path(id: link.id), method: :post, remote: true %>
       </div>
     </div>
-    <h4 class="row vote-score"><%= link.vote_score %></h4>
+    <h4 class="row vote-score" id=Link_<%= link.id %> ><%= link.vote_score %></h4>
     <div class="row vote-image">
       <div class="col-md-2">
-      <%= link_to (image_tag "down-arrow.png", class: "small-arrow"), down_vote_path(id: link.id) %>
+      <%= link_to (image_tag "down-arrow.png", class: "small-arrow"), down_vote_path(id: link.id), method: :post, remote: true %>
       </div>
     </div>
   </div>
@@ -25,7 +25,7 @@
       <h6 class="col-md-12 text-left" >Description:<%= link.summary %></h6>
     </div>
     <div class="row">
-      <h6 class="col-md-10 text-left"> Submitted <%= time_ago_in_words(link.created_at) %> ago by <%= link_to link.user.username, user_path(username: link.user.username) %> to category: <%= link_to link.subreddit.name, subreddit_path(name: link.subreddit.name) %></h6>
+      <h6 class="col-md-10 text-left"> Submitted <%= link_to (time_ago_in_words(link.created_at)), link_path(id: link.id) %> ago by <%= link_to link.user.username, user_path(username: link.user.username) %> to category: <%= link_to link.subreddit.name, subreddit_path(name: link.subreddit.name) %></h6>
     </div>
   </div>
 </div>

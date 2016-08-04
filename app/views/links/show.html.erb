@@ -1,3 +1,4 @@
+<div class="row row-margin">
 <p id="notice"><%= notice %></p>
 
 <p>
@@ -32,3 +33,16 @@
 
 <%= link_to 'Edit', edit_link_path(@link) %> |
 <%= link_to 'Back', links_path %>
+</div>
+<div class="row">
+  <div class="col-xs-9">
+    <%= simple_form_for [@link, @comment] do |f| %>
+    <%= f.input :body, label: "Leave a comment:"  %>
+    <%= f.button :submit %>
+    <% end %>
+  </div>
+</div>
+<div id="link-comments"class="col-xs-9">
+  <%= render @comments %>
+
+</div>

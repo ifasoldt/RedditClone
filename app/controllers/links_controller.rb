@@ -1,5 +1,6 @@
 class LinksController < ApplicationController
   before_action :set_link, only: [:show, :edit, :update, :destroy, :up_vote, :down_vote, :go]
+
   #debugging heroku heroku log -t
   # GET /links
   # GET /links.json
@@ -11,12 +12,18 @@ class LinksController < ApplicationController
   # GET /links/1
   # GET /links/1.json
   def show
+    @comments = @link.comments
+    #CANNOT BE http://api.rusrails.ru/rails/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-build
+    @comment = Comment.new
   end
 
   def up_vote
     if session[:user_id]
-      Vote.create(value:1.0, link_id:@link.id, user_id:session[:user_id])
-      redirect_to :back
+      @vote = Vote.create(value:1.0, link_id: @link.id, user_id:session[:user_id])
+      respond_to do |format|
+        format.html {}
+        format.js{}
+      end
     else
       redirect_to login_path
       flash.notice = "Please login or create an account in order to vote"
@@ -25,8 +32,11 @@ class LinksController < ApplicationController
 
   def down_vote
     if session[:user_id]
-      Vote.create(value: -1.0, link_id:@link.id, user_id:session[:user_id])
-      redirect_to :back
+      @vote = Vote.create(value: -1.0, link_id:@link.id, user_id:session[:user_id])
+      respond_to do |format|
+        format.html {}
+        format.js{}
+      end
     else
       redirect_to login_path
       flash.notice = "Please login or create an account in order to vote"
